@@ -1,8 +1,16 @@
 import Deliveryman from '../models/Deliveryman';
+import File from '../models/File';
 
 class DeliverymanController {
   async index(req, resp) {
-    const deliveryman = await Deliveryman.findAll();
+    const deliveryman = await Deliveryman.findAll({
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+        },
+      ],
+    });
     return resp.json(deliveryman);
   }
 
@@ -17,11 +25,12 @@ class DeliverymanController {
 
   async update(req, resp) {
     const { id } = req.params;
-    const { name, email } = req.body;
+    const { name, email, avatar_id } = req.body;
     const deliveryman = await Deliveryman.findByPk(id);
     deliveryman.update({
       name,
       email,
+      avatar_id,
     });
     deliveryman.save();
 
