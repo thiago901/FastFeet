@@ -1,5 +1,4 @@
 import Sequelize, { Model } from 'sequelize';
-import Signature from './Signature';
 
 class Delivery extends Model {
   static init(sequelize) {
@@ -25,6 +24,10 @@ class Delivery extends Model {
     this.belongsTo(models.Deliveryman, {
       foreignKey: 'deliveryman_id',
       as: 'deliveryman',
+    });
+    this.belongsTo(models.Recipient, {
+      foreignKey: 'recipient_id',
+      as: 'recipient',
     });
   }
 }
